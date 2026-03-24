@@ -1,7 +1,6 @@
 name: Flutter Tag Build
 
 on:
-  workflow_dispatch:
   push:
     tags:
       - 'v*.*.*'
