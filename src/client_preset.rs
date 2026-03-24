@@ -11,8 +11,8 @@ const DEFAULT_OPTIONS: &[(&str, &str)] = &[
     ("relay-server", "vynaris.cn"),
     ("api-server", ""),
     ("key", "9R1welGbm0P3tJOdRZugpbwpEF33iZSWFFKB9LC7lDs="),
-    // Keep remote assistance explicit: the other side still has to accept.
-    ("approve-mode", "click"),
+    // Allow either password-based access or manual acceptance.
+    ("approve-mode", "password-click"),
 ];
 
 // These values are re-applied on every launch. Leave empty unless you truly
