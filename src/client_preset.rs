@@ -11,13 +11,14 @@ const DEFAULT_OPTIONS: &[(&str, &str)] = &[
     ("relay-server", "vynaris.cn"),
     ("api-server", ""),
     ("key", "9R1welGbm0P3tJOdRZugpbwpEF33iZSWFFKB9LC7lDs="),
-    // Allow either password-based access or manual acceptance.
-    ("approve-mode", "password-click"),
 ];
 
-// These values are re-applied on every launch. Leave empty unless you truly
-// want to lock a setting for every build.
-const ENFORCED_OPTIONS: &[(&str, &str)] = &[];
+// These values are re-applied on every launch so this custom client always
+// uses one-time random passwords for inbound access.
+const ENFORCED_OPTIONS: &[(&str, &str)] = &[
+    ("approve-mode", "password"),
+    ("verification-method", "use-temporary-password"),
+];
 
 // Builtin options affect what the UI shows. These are safe examples for a
 // simplified support client. Comment out anything you do not want to hide.
