@@ -9,7 +9,8 @@ on:
       upload-tag:
         type: string
         default: "nightly"
-
+permissions:
+  contents: write
 # NOTE: F-Droid builder script 'flutter/build_fdroid.sh' reads environment
 # variables from this workflow!
 #
@@ -50,6 +51,8 @@ env:
 jobs:
   generate-bridge:
     uses: ./.github/workflows/bridge.yml
+    permissions:
+      contents: write
 
   build-RustDeskTempTopMostWindow:
     uses: ./.github/workflows/third-party-RustDeskTempTopMostWindow.yml
@@ -712,13 +715,7 @@ jobs:
 
       - name: Build rustdesk
         run: |
-          if [ "${{ matrix.job.target }}" = "x86_64-apple-darwin" ]; then
-            MIN_MACOS_VERSION="11.0"
-            sed -i -e "s/MACOSX_DEPLOYMENT_TARGET\=[0-9]*.[0-9]*/MACOSX_DEPLOYMENT_TARGET=${MIN_MACOS_VERSION}/" build.py
-            sed -i -e "s/platform :osx, '.*'/platform :osx, '${MIN_MACOS_VERSION}'/" flutter/macos/Podfile
-            sed -i -e "s/osx_minimum_system_version = \"[0-9]*.[0-9]*\"/osx_minimum_system_version = \"${MIN_MACOS_VERSION}\"/" Cargo.toml
-            sed -i -e "s/MACOSX_DEPLOYMENT_TARGET = [0-9]*.[0-9]*;/MACOSX_DEPLOYMENT_TARGET = ${MIN_MACOS_VERSION};/" flutter/macos/Runner.xcodeproj/project.pbxproj
-          elif [ "${{ matrix.job.target }}" = "aarch64-apple-darwin" ]; then
+          if [ "${{ matrix.job.target }}" = "aarch64-apple-darwin" ]; then
             MIN_MACOS_VERSION="12.3"
             sed -i -e "s/MACOSX_DEPLOYMENT_TARGET\=[0-9]*.[0-9]*/MACOSX_DEPLOYMENT_TARGET=${MIN_MACOS_VERSION}/" build.py
             sed -i -e "s/platform :osx, '.*'/platform :osx, '${MIN_MACOS_VERSION}'/" flutter/macos/Podfile

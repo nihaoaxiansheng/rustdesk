@@ -5,8 +5,7 @@ fn main() {}
 
 #[cfg(target_os = "macos")]
 fn main() {
-    common::load_custom_client();
-    apply_client_preset();
+    crate::common::load_custom_client();
     hbb_common::init_log(false, "service");
-    start_os_service();
+    crate::start_os_service();
 }

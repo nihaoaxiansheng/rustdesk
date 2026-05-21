@@ -412,10 +412,6 @@ def build_flutter_dmg(version, features):
     os.chdir('flutter')
     system2('flutter build macos --release')
     system2('cp -rf ../target/release/service ./build/macos/Build/Products/Release/RustDesk.app/Contents/MacOS/')
-    # `flutter build macos` signs the app bundle, but we copy `service` into the
-    # bundle afterwards. Re-sign the whole app so unsigned test artifacts remain
-    # launchable and bundle sealing stays consistent.
-    system2('codesign --force --deep --sign - ./build/macos/Build/Products/Release/RustDesk.app')
     '''
     system2(
         "create-dmg --volname \"RustDesk Installer\" --window-pos 200 120 --window-size 800 400 --icon-size 100 --app-drop-link 600 185 --icon RustDesk.app 200 190 --hide-extension RustDesk.app rustdesk.dmg ./build/macos/Build/Products/Release/RustDesk.app")
@@ -516,7 +512,7 @@ def main():
         system2('pip3 install -r requirements.txt')
         system2(
             f'python3 ./generate.py -f ../../{res_dir} -o . -e ../../{res_dir}/rustdesk-{version}-win7-install.exe')
-        system2('mv ../../{res_dir}/rustdesk-{version}-win7-install.exe ../..')
+        system2(f'mv ../../{res_dir}/rustdesk-{version}-win7-install.exe ../..')
     elif os.path.isfile('/usr/bin/pacman'):
         # pacman -S -needed base-devel
         system2("sed -i 's/pkgver=.*/pkgver=%s/g' res/PKGBUILD" % version)

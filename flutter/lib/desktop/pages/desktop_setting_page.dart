@@ -1062,6 +1062,10 @@ class _SafetyState extends State<_Safety> with AutomaticKeepAliveClientMixin {
               _OptionCheckBox(context, 'Enable blocking user input',
                   kOptionEnableBlockInput,
                   enabled: enabled, fakeValue: fakeValue),
+            if (bind.mainSupportedPrivacyModeImpls() != '[]')
+              _OptionCheckBox(
+                  context, 'Enable privacy mode', kOptionEnablePrivacyMode,
+                  enabled: enabled, fakeValue: fakeValue),
             _OptionCheckBox(context, 'Enable remote configuration modification',
                 kOptionAllowRemoteConfigModification,
                 enabled: enabled, fakeValue: fakeValue),
@@ -1109,8 +1113,9 @@ class _SafetyState extends State<_Safety> with AutomaticKeepAliveClientMixin {
                             if (value ==
                                     passwordValues[passwordKeys
                                         .indexOf(kUsePermanentPassword)] &&
-                                (await bind.mainGetPermanentPassword())
-                                    .isEmpty) {
+                                (await bind.mainGetCommon(
+                                        key: "permanent-password-set")) !=
+                                    "true") {
                               if (isChangePermanentPasswordDisabled()) {
                                 await callback();
                                 return;

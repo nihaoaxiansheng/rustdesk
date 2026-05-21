@@ -24,7 +24,6 @@ src/bridge_generated.io.rs
 *deb
 rustdesk
 *.cache
-.claude
 # appimage
 appimage/AppDir
 appimage/*.AppImage
